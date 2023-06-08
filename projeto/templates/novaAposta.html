@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content%}
+<div class="content-section">
+    <form method="POST" action="">
+        <div class="content-section">
+            <form method="POST" action="">
+                {{form.hidden_tag()}}
+                <fieldset class="form-group">
+                    <legend class=border-bottom mb-4">Apostar</legend>
+                    <div class="form-group">
+                        {{form.desporto.label(class="form-control-label")}}
+                        {{form.desporto(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{form.moeda.label(class="form-control-label")}}
+                        {{form.moeda(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{form.valor.label(class="form-control-label")}}
+                        {{form.valor(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{form.evento.label(class="form-control-label")}}
+                        {{form.evento(class="form-control form-control-lg") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+    </form>
+    <script>
+        let desporto_select = document.getElementById('desporto');
+        let evento_select = document.getElementById('evento');
+
+        desporto_select.onchange = function () {
+            desporto = desporto_select.value;
+            
+            fetch('/aposta/' + desporto).then(function(response) {
+
+                response.json().then(function(data){
+                    let optionHTML = '';
+                    
+                   for(let evento of data.eventos) {
+                        optionHTML += '<option value="' + evento.id + '">' + 'Jogo \n' + evento.jornada + ' \n da competição \n' + evento.liga + '\n Equipa: \n' + evento.equipa + '\n Odd: \n' + evento.odd + '</option>';
+                   }
+
+                   evento_select.innerHTML = optionHTML;
+                });
+            });
+        }
+    </script>
+
+{% endblock %}

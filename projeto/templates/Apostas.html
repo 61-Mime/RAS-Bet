@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+ <h1 class="mb-3"> Apostas de {{user.username}} ({{apostas.total}})</h1>
+    {% for aposta in apostas.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              {{ aposta.user_id.username }}</a>
+              <small class="text-muted">Valor apostado:{{ aposta.valor }} {{aposta.moeda}}</small>
+            </div>
+            <p class="article-content">Estado Atual: <p style="color:#008000">{{ aposta.estado}}</p></p>
+            <p class="article-content">Evento Desportivo:{{ aposta.evento }}</p>
+            <p class="article-content">Equipa:{{ aposta.equipa}}</p>
+            <p class="article-content">Odd:{{ aposta.odd}}</p>
+            <p class="article-content"> Data do Jogo: {{ aposta.dia }}/{{aposta.mes}}/{{aposta.ano}}</p>
+            <p class="article-content"> Hora do Jogo: {{ aposta.hora }}:{{aposta.minuto}}</p>
+          </div >
+        </article>
+    {% endfor %}
+{% endblock content %}
